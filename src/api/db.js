@@ -25,3 +25,5 @@ export const FIREBASE_APP = firebase.initializeApp(firebaseConfig);
 export const FIREBASE_DB = firebase.firestore(FIREBASE_APP);
 export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
 
+export const FLASHCARDS = FIREBASE_DB.collection('flashcards');
+export const CARDS = FIREBASE_DB.collection('cards');

@@ -8,6 +8,7 @@ import { ROUTES } from '../Constants/navigation.constants';
 import Login from '../Screens/Login.screen';
 import SignUp from "../Screens/SignUp.screen";
 import Flashcards from "../Screens/Flashcards.screen";
+import Cards from "../Screens/Cards.screen";
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ export default function Navigation() {
           title: ''
         }} />
         <Stack.Screen name={ROUTES.flashcards} component={Flashcards} />
+        <Stack.Screen name={ROUTES.cards.name} component={Cards} />
       </Stack.Navigator>
     </NavigationContainer>
   );
