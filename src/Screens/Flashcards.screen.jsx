@@ -15,6 +15,7 @@ export default function Flashcards() {
       <Text
         style={styles.texto}
       >Flashcards</Text>
+      
       <AddFlashcard />
 
       <View>

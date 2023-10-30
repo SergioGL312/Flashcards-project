@@ -28,11 +28,11 @@ export const useFlashcards = () => {
   return flashcards;
 };
 
-export const useCards = (categoryId) => {
+export const useCards = (flashcardId) => {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    const query = DB_CARDS.where('categoryId', '==', categoryId);
+    const query = DB_CARDS.where('flashcardId', '==', flashcardId);
     query.onSnapshot((qs) => {
       const results = qs.docs.map((doc) => ({
         id: doc.id,
@@ -41,7 +41,7 @@ export const useCards = (categoryId) => {
 
       setCards(results);
     });
-  }, [categoryId]);
+  }, [flashcardId]);
 
   return cards;
 };

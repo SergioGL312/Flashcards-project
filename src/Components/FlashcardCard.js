@@ -5,6 +5,8 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { ROUTES } from '../Constants/navigation.constants';
 // HOOKS
 import { useCards } from '../hooks/data';
+// UTILS
+import { pluralize } from '../utils/text';
 
 export default function FlascardCard({ flashcard }) {
   const navigation = useNavigation();
