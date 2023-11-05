@@ -1,14 +1,47 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-
+import React, {useEffect} from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { useCallback } from "react";
 // COMPONENTS
 import AddFlashcard from "../Components/AddFlashcard";
 import { useFlashcards } from "../hooks/data";
 import FlascardCard from "../Components/FlashcardCard";
 
+
+//Diseño 
+import {useFonts} from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+
+
 export default function Flashcards() {
 
   const flashcards = useFlashcards();
+
+
+      //Things about the LOADFONTS
+      const [fontsLoaded] = useFonts({
+        Bebas: require("../assets/fonts/BebasNeue-Regular.ttf")
+      }); 
+    
+      //SplashScreen for Loading Fonts
+    
+      useEffect (()=> {
+        async function prepare (){
+          await SplashScreen.preventAutoHideAsync();
+        }
+        prepare (); 
+      }, [])
+    
+    
+      const onLayout = useCallback(async() => {
+        if (fontsLoaded){
+          await SplashScreen.hideAsync();
+        
+      }
+      }, [fontsLoaded]);
+  
+      if (!fontsLoaded) return null;
+  
+      //
 
   return (
     <View>
@@ -37,8 +70,11 @@ export default function Flashcards() {
 
 const styles = StyleSheet.create({
   texto: {
+    fontFamily: "Bebas",
+    color: '#3EB1BE',
     fontSize: 30,
     textAlign: "center",
     marginTop: "20%"
-  }
+  }, 
+
 })

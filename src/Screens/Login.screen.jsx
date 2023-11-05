@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from "react-native";
 
+//LOGO
+import logo from '../assets/images/Logo.png';
+import {useFonts} from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 // FIREBASE
 import { FIREBASE_AUTH } from "../api/db";
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -10,6 +14,7 @@ import { ROUTES } from "../Constants/navigation.constants";
 import { AuthContext } from "../Wrappers/AuthContext";
 // MESSAGES ERROR
 import { ERROR_MESSAGES } from "../Constants/errors.constants";
+import { useCallback } from "react";
 
 const baseState = () => ({
   email: '',
@@ -17,6 +22,7 @@ const baseState = () => ({
 });
 
 export default function Login({ navigation }) {
+
 
   const { user } = useContext(AuthContext);
   const [form, setForm] = useState(baseState());
@@ -71,20 +77,52 @@ export default function Login({ navigation }) {
 
   const { email, password } = form;
 
+
+    //Things about the LOADFONTS
+    const [fontsLoaded] = useFonts({
+      Bebas: require("../assets/fonts/BebasNeue-Regular.ttf")
+    }); 
+  
+    //SplashScreen for Loading Fonts
+  
+    useEffect (()=> {
+      async function prepare (){
+        await SplashScreen.preventAutoHideAsync();
+      }
+      prepare (); 
+    }, [])
+  
+  
+    const onLayout = useCallback(async() => {
+      if (fontsLoaded){
+        await SplashScreen.hideAsync();
+      
+    }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) return null;
+  
+  
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayout}>
       <View style={styles.login}>
 
-        <Text style={{
+        {/* <Text style={{
           fontSize: 30,
           width: '90%',
           marginBottom: 50,
           fontWeight: 'bold',
           textAlign: 'center'
-        }}>Login</Text>
+        }}>Hola</Text> */}
+
+
+        <Image style={styles.image} source={require('../assets/images/Logo.png')} />
+
+        
 
         <View style={{ width: '100%' }}>
-          <Text style={{ fontSize: 17, fontWeight: '400', color: '#000', paddingBottom: 21 }}>E-mail</Text>
+          <Text style={styles.font}>E-mail</Text>
 
           <TextInput
             style={styles.input}
@@ -93,7 +131,7 @@ export default function Login({ navigation }) {
             onChangeText={(value) => handleChange({ key: 'email', value })}
           />
 
-          <Text style={{ fontSize: 17, fontWeight: '400', color: '#000', paddingBottom: 21 }}>Password</Text>
+          <Text style={styles.font}>Password</Text>
 
           <TextInput
             style={styles.input}
@@ -107,18 +145,18 @@ export default function Login({ navigation }) {
         {error && <Text style={{ color: 'red' }}>{error}</Text>}
 
         <TouchableOpacity
-          style={[styles.button_login, { backgroundColor: '#D9D9D9' }]}
+          style={[styles.button_login, { backgroundColor: '#000' }]}
           onPress={signIn}
           disabled={!valid}
         >
-          <Text style={{ fontSize: 17, fontWeight: '400', color: 'black' }}>Login</Text>
+          <Text style={{fontFamily: "Bebas", fontSize: 25, fontWeight: '400', color: 'white' }}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={{bottom: 0, position: 'absolute'}}
           onPress={() => navigation.navigate(ROUTES.signup)}
         >
-          <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'black' }}>Sign up</Text>
+          <Text style={{fontFamily: "Bebas",  fontSize: 20, fontWeight: 'bold', color: 'black' }}>Sign up</Text>
         </TouchableOpacity>
       </View>
 
@@ -134,6 +172,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  image :{
+    marginBottom:5
+  }, 
   login: {
     width: '90%',
     height: 700,
@@ -144,10 +185,10 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     height: 59,
-    backgroundColor: '#ffffff90',
-    borderColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: '#D8F3FF',
+    borderColor: 'rgba(55, 198, 236, 0.5)',
     borderWidth: 1,
-    borderRadius: 3,
+    borderRadius: 2,
     paddingLeft: 10,
     marginBottom: 45
   },
@@ -162,4 +203,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 7
   },
+  font: {
+    fontFamily: "Bebas", 
+    fontSize: 27, 
+    fontWeight: '400', 
+    color: '#3EB1BE', 
+    paddingBottom: 21, 
+    textAlign: 'center' 
+
+  }, 
 })
