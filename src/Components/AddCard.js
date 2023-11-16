@@ -10,7 +10,8 @@ import { useModal } from '../hooks/modal';
 import { AuthContext } from "../Wrappers/AuthContext";
 // FIREBASE
 import { CARDS } from '../api/db';
-
+// OPENAI
+import { executeMessage } from '../api/openai';
 
 const baseState = () => ({
   term: '',
@@ -24,6 +25,8 @@ export default function AddCard() {
   const { id: flashcardId } = route.params.flashcard;
   const { visible, show, hide } = useModal();
 
+  const { term, definition } = form;
+
   const createCard = () => {
     CARDS.add({
       ...form,
@@ -34,13 +37,33 @@ export default function AddCard() {
     hide();
   };
 
+  const generateCard = async () => {
+    const message =
+      `Devuelve un JSON con los siguientes campos:
+
+      * term
+      * definition
+
+      La definición deberá ser generada acorde al término proporcionado.
+      El término será el siguiente:
+
+      ${term}
+
+      La definición deberá contener máximo 30 palabras y ser del mismo idioma que del término proporcionado.
+
+      Si el término no contiene nada, genera un término aleatorio y su definición. 
+    `
+    let data = await executeMessage(message);
+    data = await JSON.parse(data);   
+
+    setForm(data);
+  }
+
   useEffect(() => {
     if (!visible) {
       setForm(baseState());
     }
   }, [visible, setForm]);
-
-  const { term, definition } = form;
 
   return (
     <View>
@@ -75,6 +98,11 @@ export default function AddCard() {
           <Button
             title="Add"
             onPress={createCard}
+          />
+
+          <Button
+            title="Generate"
+            onPress={generateCard}
           />
         </View>
       </Overlay>

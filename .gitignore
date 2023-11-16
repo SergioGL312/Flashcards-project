@@ -36,3 +36,6 @@ yarn-error.*
 
 # Excluir el archivo config.js
 config.js
+
+# Env variables
+.env
