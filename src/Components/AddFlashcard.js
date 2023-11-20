@@ -30,11 +30,17 @@ export default function AddFlashcard() {
   };
 
   return (
-    <View>
+    <View
+      style={{
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
+      }}>
       <FAB
         icon={{ name: 'add', color: 'white' }}
         onPress={show}
         size="small"
+        color="#539CFE"
       />
 
       <Overlay

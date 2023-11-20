@@ -14,7 +14,7 @@ import { pluralize } from '../utils/text';
 // FIREBASE
 import { FLASHCARDS } from '../api/db';
 
-export default function FlascardCard({ flashcard, isLongPressed, onLongPress }) {
+export default function FlascardCard({ flashcard, isLongPressed, onLongPress, backgroundColor }) {
   const navigation = useNavigation();
   const { nameFlashcard, id } = flashcard;
   const cards = useCards(id);
@@ -75,23 +75,26 @@ export default function FlascardCard({ flashcard, isLongPressed, onLongPress }) 
         padding: 24,
         marginBottom: 24,
         borderRadius: 12,
-        width: '75%'
+        width: isLongPressed ? '80%' : '100%',
+        backgroundColor: backgroundColor,
       }}>
         <TouchableOpacity
           onPress={() => navigation.navigate(ROUTES.cards.name, { flashcard })}
           onLongPress={onLongPress}
           activeOpacity={0.5}
         >
-          <View>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: isLongPressed ? 20 : 'auto'
+            }}>
             <Text style={{ color: 'black' }}>{nameFlashcard}</Text>
-
-            {!!cards.length && (
-              <View>
-                <Text>
-                  {pluralize({ noun: 'Card', number: cards.length })}
-                </Text>
-              </View>
-            )}
+            <View>
+              <Text>
+                {pluralize({ noun: 'Card', number: cards.length })}
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
       </View>
@@ -108,7 +111,7 @@ export default function FlascardCard({ flashcard, isLongPressed, onLongPress }) 
               <Icon
                 name="edit"
                 type="material"
-                color="blue"
+                color="#539CFE"
               />
             }
             onPress={show}
@@ -120,7 +123,7 @@ export default function FlascardCard({ flashcard, isLongPressed, onLongPress }) 
               <Icon
                 name="delete"
                 type="material"
-                color="red"
+                color="#E74C3C"
               />
             }
             onPress={() => deleteFlashcard(id)}
