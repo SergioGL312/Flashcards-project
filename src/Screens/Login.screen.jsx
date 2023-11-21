@@ -145,7 +145,7 @@ export default function Login({ navigation }) {
         {error && <Text style={{ color: 'red' }}>{error}</Text>}
 
         <TouchableOpacity
-          style={[styles.button_login, { backgroundColor: '#000' }]}
+          style={[styles.button_login, { backgroundColor: '#000', marginBottom:50 }]}
           onPress={signIn}
           disabled={!valid}
         >
@@ -156,7 +156,7 @@ export default function Login({ navigation }) {
           style={{bottom: 0, position: 'absolute'}}
           onPress={() => navigation.navigate(ROUTES.signup)}
         >
-          <Text style={{fontFamily: "Bebas",  fontSize: 20, fontWeight: 'bold', color: 'black' }}>Sign up</Text>
+          <Text style={{fontFamily: "Bebas",  fontSize: 18, fontWeight: 'bold', color: 'black' }}>Sign up</Text>
         </TouchableOpacity>
       </View>
 

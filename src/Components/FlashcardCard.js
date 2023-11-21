@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, Text, View, TextInput } from 'react-native';
+import { TouchableOpacity, Text, View, TextInput, StyleSheet } from 'react-native';
 import { Overlay } from '@rneui/base';
 import { Icon, Button } from '@rneui/themed';
+//Diseño
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+
+
 
 // CONSTANTS
 import { ROUTES } from '../Constants/navigation.constants';
@@ -47,28 +52,61 @@ export default function FlascardCard({ flashcard, isLongPressed, onLongPress, ba
     }
   };
 
+  //Things about the LOADFONTS
+  const [fontsLoaded] = useFonts({
+    Bebas: require("../assets/fonts/BebasNeue-Regular.ttf")
+  });
+
+  //SplashScreen for Loading Fonts
+
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, [])
+
+
+  const onLayout = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) return null;
+
+  //
+
   return (
     <View style={{ flexDirection: 'row', }}>
 
       <Overlay
-        overlayStyle={{ backgroundColor: "#4C73F5" }}
+        overlayStyle={{ backgroundColor: "#82D1F3" }}
         isVisible={visible}
         onBackdropPress={hide}
       >
         <View>
-          <Text style={{ color: "white" }}>New Name</Text>
+          <View>
+            <Text style={styles.texto}>New Name</Text>
 
-          <TextInput
-            style={{ color: "black" }}
-            onChangeText={(text) => setNewName(text)}
-            value={newName}
-          />
+
+            <TextInput
+              style={styles.inputtext}
+              onChangeText={(text) => setNewName(text)}
+              value={newName}
+            />
+          </View>
+
+          <View style={styles.bottomdesing}>
+
+            <Button
+              color="#F591C0"
+              title="Edit"
+              onPress={() => editFlashcard(id, newName)}
+            />
+          </View>
         </View>
-
-        <Button
-          title="Edit"
-          onPress={() => editFlashcard(id, newName)}
-        />
       </Overlay>
 
       <View style={{
@@ -133,3 +171,26 @@ export default function FlascardCard({ flashcard, isLongPressed, onLongPress, ba
     </View>
   );
 }
+const styles = StyleSheet.create({
+  texto: {
+    color: 'white',
+    fontFamily: "Bebas",
+    fontSize: 40,
+    textAlign: 'center',
+    margin: "5%"
+  },
+
+  inputtext: {
+    color: "#95A2A5",
+    fontFamily: "Bebas",
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontSize: 23, marginVertical: 20
+  },
+  bottomdesing: {
+    alignContent: 'center',
+    fontFamily: "Bebas",
+    width: 100,
+    alignSelf: 'center'
+  },
+});
