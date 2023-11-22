@@ -54,10 +54,12 @@ export default function AddCard() {
 
       ${term}
 
-      La definición deberá contener máximo 30 palabras y ser del mismo idioma que del término proporcionado.
+      La definición deberá contener máximo 20 palabras y ser del mismo idioma que del término proporcionado.
 
       Si el término no contiene nada, genera un término aleatorio y su definición. 
+
     `
+    console.log(message);
     let data = await executeMessage(message);
     data = await JSON.parse(data);
 

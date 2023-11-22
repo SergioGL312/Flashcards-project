@@ -115,35 +115,39 @@ export default function SignUp({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.sign_up}>
-        <Image
-          style={styles.image}
-          source={require("../assets/images/User.png")}
-        />
-
-        <Text
-          style={{
-            fontFamily: "Bebas",
-            color: "#3EB1BE",
-            fontSize: 30,
-            width: "90%",
-            marginBottom: 50,
-            fontWeight: "bold",
-            textAlign: "center",
-          }}
-        >
-          SIGN UP
-        </Text>
-
-        <View style={{ width: "100%" }}>
-          <Text style={styles.font}>E-mail</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="s@gmail.com"
-            value={email}
-            onChangeText={(value) => handleChange({ key: "email", value })}
+        <View style={{ alignSelf: "center" }}>
+          <Image
+            style={styles.image}
+            source={require("../assets/images/User.png")}
           />
-
+        </View>
+        <View style={{ alignSelf: "center" }}>
+          <Text
+            style={{
+              fontFamily: "Bebas",
+              color: "#3EB1BE",
+              fontSize: 30,
+              width: "90%",
+              marginBottom: 50,
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            SIGN UP
+          </Text>
+        </View>
+        <View style={{ width: "100%" }}>
+          <View style={{alignSelf: 'center'}}>
+            <Text style={styles.font}>E-mail</Text>
+          </View>
+          <View>
+            <TextInput
+              style={styles.input}
+              placeholder="s@gmail.com"
+              value={email}
+              onChangeText={(value) => handleChange({ key: "email", value })}
+            />
+          </View>
           <Text style={styles.font}>Password</Text>
 
           <TextInput
