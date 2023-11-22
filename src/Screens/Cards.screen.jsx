@@ -96,8 +96,10 @@ export default function Cards({ route }) {
           style = {{
             backgroundColor: "#F2BBBB",
             height:"55%",
+            width: "90%",
             borderRadius:20,
-            margin: 10
+            margin: 10, 
+            alignSelf: 'center'
           }}
           >
 

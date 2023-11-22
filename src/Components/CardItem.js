@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Text, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, TouchableHighlight, StyleSheet, View } from 'react-native';
 import { useModal } from '../hooks/modal';
 
 //Diseño
@@ -36,37 +36,44 @@ export default function CardItem({ card }) {
   if (!fontsLoaded) return null;
 
   return (
-    <TouchableHighlight
-      activeOpacity={0.5}
-      onPress={toggle}
-    >
-      {visible ? (
-        <Text style={styles.texto}>{term}</Text>
-      ) : (
-        <>
-          <Text style = {styles.des}>{definition}</Text>
-        </>
-      )}
-    </TouchableHighlight>
+    <View style = {{alignContent: 'center'}}>
+      <TouchableHighlight
+        underlayColor="#F2BBBB"
+        activeOpacity={0.5}
+        onPress={toggle}
+      >
+        {visible ? (
+          <View style = {{alignContent: 'center', width: 'auto', height: 'auto', alignSelf:'center'}}>
+          <Text style={styles.texto}>{term}</Text>
+          </View>
+        ) : (
+          <>
+          <View style = {{alignContent: 'center', width: 'auto', height: 'auto', alignSelf:'center'}}>
+            <Text style={styles.des}>{definition}</Text></View>
+          </>
+          
+        )}
+      </TouchableHighlight>
+    </View>
   );
 }
 const styles = StyleSheet.create({
   texto: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    marginVertical:220,
+    marginVertical: 220,
     fontFamily: "Bebas",
     fontSize: 30,
     color: 'white'
-  }, 
+  },
   des: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    marginVertical:200,
-    marginHorizontal:10,
+    marginVertical: 200,
+    marginHorizontal: 10,
     fontFamily: "Bebas",
     fontSize: 20,
     color: 'white'
-  }, 
+  },
 
 });
