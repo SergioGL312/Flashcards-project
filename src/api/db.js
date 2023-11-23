@@ -5,10 +5,11 @@
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-import { getAuth } from 'firebase/auth';
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 // CONFIG
 import {
@@ -33,7 +34,12 @@ const firebaseConfig = {
 // Initialize Firebase
 export const FIREBASE_APP = firebase.initializeApp(firebaseConfig);
 export const FIREBASE_DB = firebase.firestore(FIREBASE_APP);
-export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
+
+const auth = initializeAuth(FIREBASE_APP, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
+
+export const FIREBASE_AUTH = auth;
 
 export const FLASHCARDS = FIREBASE_DB.collection('flashcards');
 export const CARDS = FIREBASE_DB.collection('cards');
